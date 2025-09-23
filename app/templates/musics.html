@@ -1,0 +1,25 @@
+{% extends 'template.html' %}
+
+{% block content %}
+
+<table class="table table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th scope="col">Música</th>
+            <th scope="col">Artista(s)</th>
+            <th scope="col">Gênero</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for musica in musics %}
+            <tr>
+                <td>{{ musica.name }}</td>
+                <td>{{ musica.artist }}</td>
+                <td>{{ musica.genre }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}
