@@ -15,4 +15,5 @@ def authenticate():
 @auth_bp.route('/logout')
 def logout():
     session['username'] = None
+    flash("Usuário deslogado!")
     return redirect('/')
