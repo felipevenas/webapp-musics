@@ -8,15 +8,17 @@
             <th scope="col">Música</th>
             <th scope="col">Artista(s)</th>
             <th scope="col">Gênero</th>
+            <th scope="col">Ações</th>
         </tr>
     </thead>
 
     <tbody>
-        {% for musica in musics %}
+        {% for music in musics %}
             <tr>
-                <td>{{ musica.name }}</td>
-                <td>{{ musica.artist }}</td>
-                <td>{{ musica.genre }}</td>
+                <td>{{ music.name }}</td>
+                <td>{{ music.artist }}</td>
+                <td>{{ music.genre }}</td>
+                <td><a style="text-decoration: none; font-weight: bold; color: black;" href="{{ url_for('index_bp.update_page', id=music.id) }}">Editar</a></td>
             </tr>
         {% endfor %}
     </tbody>
