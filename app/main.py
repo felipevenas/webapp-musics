@@ -19,4 +19,5 @@ app.register_blueprint(index_bp)
 app.register_blueprint(music_bp)
 app.register_blueprint(auth_bp)
 
-app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)

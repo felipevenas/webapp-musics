@@ -22,8 +22,8 @@
                 <div class="navbar-nav ms-auto">
                     <a class="nav-link active" aria-current="page" href="/">Início</a>
                     <a class="nav-link" href="{{ url_for('index_bp.register_page') }}">Cadastrar Música</a>
-                    <a class="nav-link" href="/login">Login</a>
-                    <a class="nav-link" href="/logout">Logout</a>
+                    <a class="nav-link" href="{{ url_for('index_bp.login_page') }}">Login</a>
+                    <a class="nav-link" href="{{ url_for('auth_bp.logout') }}">Logout</a>
                 </div>
             </div>
         </div>
