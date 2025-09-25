@@ -1,28 +1,28 @@
-from flask import render_template, redirect, request, Blueprint
+from flask import redirect, request, Blueprint, url_for, flash
 
 from app.domain.music.model import Music
-
-music1 = Music("Vai e chora", "Sorriso Maroto", "Samba")
-music2 = Music("Camisa 10", "Turma do Pagode", "Samba")
-music3 = Music("Amar não é pecado", "Silvanno Salles", "Arrocha")
-lista = [music1, music2, music3]
+from app.db.config import db
 
 # Esse controlador realiza ações e também pode redirecionar para outras páginas:
 
 music_bp = Blueprint('music_bp', __name__)
 
-@music_bp.route('/musics')
-def list_musics():
-    return render_template("musics.html",
-                           musics = lista,
-                           title = "Lista de músicas")
-
 @music_bp.route('/add', methods=['POST'])
 def add_music():
-    name = request.form['inputName']
-    artist = request.form['inputArtist']
-    genre = request.form['inputGenre']
-    newMusic = Music(name, artist, genre)
-    lista.append(newMusic)
+    form_name = request.form['inputName']
+    form_artist = request.form['inputArtist']
+    form_genre = request.form['inputGenre']
 
-    return redirect('/musics')
+    music = Music.query.filter_by(name=form_name).first()
+    if music:
+        flash("Música já cadastrada!")
+        return redirect(url_for('index_bp.list_page'))
+    
+    new_music = Music(name=form_name,
+                      artist=form_artist, 
+                      genre=form_genre)
+    
+    db.session.add(new_music)
+    db.session.commit()
+
+    return redirect(url_for('index_bp.list_page'))
