@@ -1,4 +1,4 @@
-from flask import redirect, request, Blueprint, url_for, flash
+from flask import redirect, request, Blueprint, url_for, flash, session, render_template
 
 from app.domain.music.model import Music
 from app.db.config import db
@@ -23,6 +23,29 @@ def add_music():
                       genre=form_genre)
     
     db.session.add(new_music)
+    db.session.commit()
+
+    return redirect(url_for('index_bp.list_page'))
+
+@music_bp.route('/update', methods=['POST'])
+def update_music():
+    
+    music = Music.query.filter_by(id=request.form['inputId']).first()
+    
+    music.name = request.form['inputName']
+    music.artist = request.form['inputArtist']
+    music.genre = request.form['inputGenre']
+
+    db.session.add(music)
+    db.session.commit()
+
+    return redirect(url_for('index_bp.list_page'))
+
+@music_bp.route('/delete/<int:id>')
+def delete_music(id):
+
+    Music.query.filter_by(id=id).delete()
+    flash("Música excluída com sucesso!")
     db.session.commit()
 
     return redirect(url_for('index_bp.list_page'))

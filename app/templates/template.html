@@ -13,7 +13,7 @@
 
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">Lista de Músicas</a>
+            <a class="navbar-brand" href="/">iMusic</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -21,9 +21,10 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav ms-auto">
                     <a class="nav-link active" aria-current="page" href="/">Início</a>
-                    <a class="nav-link" href="/register">Cadastrar Música</a>
-                    <a class="nav-link" href="/login">Login</a>
-                    <a class="nav-link" href="/logout">Logout</a>
+                    <a class="nav-link" href="{{ url_for('index_bp.list_page') }}">Lista de Músicas</a>
+                    <a class="nav-link" href="{{ url_for('index_bp.register_page') }}">Cadastrar Música</a>
+                    <a class="nav-link" href="{{ url_for('index_bp.login_page') }}">Login</a>
+                    <a class="nav-link" href="{{ url_for('auth_bp.logout') }}">Logout</a>
                 </div>
             </div>
         </div>

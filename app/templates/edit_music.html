@@ -2,22 +2,27 @@
 
 {% block content %}
 <div class="container">
-    <form method="post" action="/add">
+    <form method="post" action="{{ url_for('music_bp.update_music') }}">
         <fieldset>
+
+            <input type="hidden" name="inputId" value="{{ music.id }}">
+
             <div class="row mb-3">
                 <label for="inputName">Nome:</label>
-                <input class="form-control" type="text" id="inputName" name="inputName">
+                <input class="form-control" type="text" 
+                id="inputName" name="inputName" value="{{ music.name }}">
             </div>
 
             <div class="row mb-3">
                 <label for="inputArtist">Artista(s):</label>
-                <input class="form-control" type="text" id="inputArtist" name="inputArtist">
+                <input class="form-control" type="text" 
+                id="inputArtist" name="inputArtist" value="{{ music.artist }}">
             </div>
 
             <div class="row mb-3">
                 <label for="inputGenre">Gênero:</label>
                 <select class="form-select" aria-label="Default select example" id="inputGenre" name="inputGenre">
-                    <option selected>Escolha...</option>
+                    <option selected>{{ music.genre }}</option>
                     <option value="Sertanejo">Sertanejo</option>
                     <option value="Arrocha">Arrocha</option>
                     <option value="MPB">MPB</option>
