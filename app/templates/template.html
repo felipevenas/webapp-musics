@@ -32,10 +32,10 @@
     
     <div class="container">
 
-        {% with messages = get_flashed_messages() %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
             <ul class=list-unstyled id="messages">
-                {% for message in messages %}
+                {% for category, message in messages %}
                     <li class="alert alert-primary mt-4">{{ message }}</li>
                 {% endfor %}
             </ul>

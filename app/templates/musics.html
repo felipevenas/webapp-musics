@@ -8,11 +8,12 @@
             <th scope="col">Música</th>
             <th scope="col">Artista(s)</th>
             <th scope="col">Gênero</th>
+            <th scope="col">Ações</th>
         </tr>
     </thead>
 
     <tbody>
-        {% for musica in musics %}
+        {% for music in musics %}
             <tr>
                 <td>{{ music.name }}</td>
                 <td>{{ music.artist }}</td>
@@ -24,6 +25,7 @@
                     <a style="text-decoration: none; font-weight: bold; color: rgb(255, 91, 91);" 
                     href="{{ url_for('music_bp.delete_music', id=music.id) }}">Remover</a>
                 </td>
+                <td><a style="text-decoration: none; font-weight: bold; color: black;" href="{{ url_for('index_bp.update_page', id=music.id) }}">Editar</a></td>
             </tr>
         {% endfor %}
     </tbody>
