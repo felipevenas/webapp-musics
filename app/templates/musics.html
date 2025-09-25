@@ -18,6 +18,13 @@
                 <td>{{ music.name }}</td>
                 <td>{{ music.artist }}</td>
                 <td>{{ music.genre }}</td>
+                <td>
+                    <a style="text-decoration: none; font-weight: bold; color: rgb(143, 143, 255);" 
+                    href="{{ url_for('index_bp.update_page', id=music.id) }}">Editar</a>
+                    
+                    <a style="text-decoration: none; font-weight: bold; color: rgb(255, 91, 91);" 
+                    href="{{ url_for('music_bp.delete_music', id=music.id) }}">Remover</a>
+                </td>
                 <td><a style="text-decoration: none; font-weight: bold; color: black;" href="{{ url_for('index_bp.update_page', id=music.id) }}">Editar</a></td>
             </tr>
         {% endfor %}

@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, session, redirect, url_for
+from flask import render_template, Blueprint, session, redirect, url_for, flash
 
 from app.domain.music.model import Music
 
@@ -14,20 +14,15 @@ def index():
 @index_bp.route('/register')
 def register_page():
     if session['username'] == None or 'username' not in session:
+        flash("É necessário se autenticar!")
         return redirect(url_for('index_bp.login_page'))
     return render_template("add_music.html", 
                            title = "Cadastrar música")
 
-@index_bp.route('/update')
-def update_page():
-    if session['username'] == None or 'username' not in session:
-        return redirect(url_for('index_bp.login_page'))
-    return render_template("edit_music.html",
-                           title = "Editar música")
-
 @index_bp.route('/musics')
 def list_page():
     if session['username'] == None or 'username' not in session:
+        flash("É necessário se autenticar!")
         return redirect(url_for('index_bp.login_page'))
     
     lista = Music.query.order_by(Music.id)
@@ -35,6 +30,18 @@ def list_page():
     return render_template("musics.html",
                            musics = lista,
                            title = "Lista de músicas")
+
+@index_bp.route('/update/<int:id>')
+def update_page(id):
+    if session['username'] == None or 'username' not in session:
+        flash("É necessário se autenticar!")
+        return redirect(url_for('index_bp.login_page'))
+    
+    find_music = Music.query.filter_by(id=id).first()
+
+    return render_template('edit_music.html', 
+                           title = "Editar música",
+                           music = find_music)
 
 @index_bp.route('/login')
 def login_page():
