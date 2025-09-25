@@ -4,40 +4,32 @@
 <div class="container">
     <form method="post" action="{{ url_for('music_bp.add_music') }}" enctype="multipart/form-data">
         <fieldset>
+
+            {{ form.csrf_token() }}
+
             <div class="row mb-3">
-                <label for="inputName">Nome:</label>
-                <input class="form-control" type="text" id="inputName" name="inputName">
+                {{ form.name.label(class='form-label') }}
+                {{ form.name(class='form-control') }}
             </div>
 
             <div class="row mb-3">
-                <label for="inputArtist">Artista(s):</label>
-                <input class="form-control" type="text" id="inputArtist" name="inputArtist">
+                {{ form.artist.label(class='form-label') }}
+                {{ form.artist(class='form-control') }}
             </div>
 
             <div class="row mb-3">
-                <label for="inputGenre">Gênero:</label>
-                <select class="form-select" aria-label="Default select example" id="inputGenre" name="inputGenre">
-                    <option selected>Escolha...</option>
-                    <option value="Sertanejo">Sertanejo</option>
-                    <option value="Arrocha">Arrocha</option>
-                    <option value="MPB">MPB</option>
-                    <option value="Pop">Pop</option>
-                    <option value="Eletrônica">Eletrônica</option>
-                    <option value="Samba">Samba</option>
-                    <option value="Rap">Rap</option>
-                    <option value="Funk">Funk</option>
-                    <option value="Rock">Rock</option>
-                </select>
+                {{ form.genre.label(class='form-label') }}
+                {{ form.genre(class='form-control') }}
             </div>
 
             <div class="row mb-3">
-                <label for="inputFile">Selecione a capa do album:</label>
+                <label for="inputFile">Selecione a capa do album':</label>
                 <input type="file" class="form-control" name="inputFile" 
                 id="inputFile" accept=".jpg, .jpeg, .png">
             </div>
 
             <div class="row">
-                <button class="btn btn-primary" type="submit">Cadastrar</button>
+                {{ form.button(class='btn btn-primary') }}
             </div>
         </fieldset>
     </form>

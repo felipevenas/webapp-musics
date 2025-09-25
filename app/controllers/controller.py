@@ -2,6 +2,7 @@ from flask import render_template, Blueprint, session, redirect, url_for, flash
 
 from app.domain.music.model import Music
 from app.domain.upload.services import search_image
+from app.forms.forms import FormMusic
 
 # Esse controlador serve apenas para renderizar as páginas:
 
@@ -9,6 +10,9 @@ index_bp = Blueprint('index_bp', __name__)
 
 @index_bp.route('/')
 def index():
+    if session['username'] == None or 'username' not in session:
+        flash("É necessário se autenticar!")
+        return redirect(url_for('index_bp.login_page'))
     return render_template("index.html",
                            title = "Início")
 
@@ -17,8 +21,12 @@ def register_page():
     if session['username'] == None or 'username' not in session:
         flash("É necessário se autenticar!")
         return redirect(url_for('index_bp.login_page'))
+    
+    form = FormMusic()
+    
     return render_template("register_page.html", 
-                           title = "Cadastrar música")
+                           title = "Cadastrar música",
+                           form=form)
 
 @index_bp.route('/musics')
 def list_page():
@@ -40,12 +48,19 @@ def update_page(id):
     
     find_music = Music.query.filter_by(id=id).first()
 
+    form = FormMusic()
+
+    form.name.data = find_music.name
+    form.artist.data = find_music.artist
+    form.genre.data = find_music.genre
+
     album = search_image(id)
 
     return render_template('update_page.html', 
                            title = "Editar música",
-                           music = find_music,
-                           album_music = album)
+                           music = form,
+                           album_music = album,
+                           id=id)
 
 @index_bp.route('/login')
 def login_page():

@@ -7,9 +7,15 @@ def search_image(id):
         name = str(name_image)
         name = name.split('.')
         
-        if name[0] == f'album{id}':
+        if f'album{id}' in name[0]:
             return name_image
         
     return 'default.png'
+
+def delete_image(id):
+    image = search_image(id)
+    
+    if image != 'default.png':
+        os.remove(os.path.join(config.UPLOAD_FOLDER, image))
 
     
