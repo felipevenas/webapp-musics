@@ -55,4 +55,4 @@ def register():
 def logout():
     session['username'] = None
     flash("Usuário deslogado!")
-    return redirect(url_for('index_bp.index'))
+    return redirect(url_for('index_bp.login_page'))

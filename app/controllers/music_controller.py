@@ -1,18 +1,28 @@
-from flask import redirect, request, Blueprint, url_for, flash
+from flask import redirect, request, Blueprint, url_for, flash, send_from_directory
 
 from app.domain.music.model import Music
 from app.db.config import db
 from app.forms.forms import FormMusic
 
+from app.domain.upload import config
+from app.domain.upload.services import delete_image
+from app.forms.forms import FormMusic
+ 
 # Esse controlador realiza ações e também pode redirecionar para outras páginas:
 
 music_bp = Blueprint('music_bp', __name__)
 
 @music_bp.route('/add', methods=['POST'])
 def add_music():
-    form_name = request.form['inputName']
-    form_artist = request.form['inputArtist']
-    form_genre = request.form['inputGenre']
+
+    form_recivied = FormMusic(request.form)
+
+    if not form_recivied.validate_on_submit():
+        return redirect(url_for('index_bp.register_page'))
+
+    form_name = form_recivied.name.data
+    form_artist = form_recivied.artist.data
+    form_genre = form_recivied.genre.data
 
     form_recivied = FormMusic(request.form)
 
@@ -24,6 +34,7 @@ def add_music():
     form_genre = form_recivied.genre.data
 
     music = Music.query.filter_by(name=form_name).first()
+    
     if music:
         flash("Música já cadastrada!")
         return redirect(url_for('index_bp.list_page'))
@@ -35,8 +46,8 @@ def add_music():
     db.session.add(new_music)
     db.session.commit()
 
-    return redirect(url_for('index_bp.list_page'))
     archive = request.files['inputFile']
+
     if archive:    
         archive_name = archive.filename
         archive_name = archive_name.split('.')
