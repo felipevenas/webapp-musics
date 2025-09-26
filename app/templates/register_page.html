@@ -1,0 +1,37 @@
+{% extends 'template.html' %}
+
+{% block content %}
+<div class="container">
+    <form method="post" action="{{ url_for('music_bp.add_music') }}" enctype="multipart/form-data">
+        <fieldset>
+
+            {{ form.csrf_token() }}
+
+            <div class="row mb-3">
+                {{ form.name.label(class='form-label') }}
+                {{ form.name(class='form-control') }}
+            </div>
+
+            <div class="row mb-3">
+                {{ form.artist.label(class='form-label') }}
+                {{ form.artist(class='form-control') }}
+            </div>
+
+            <div class="row mb-3">
+                {{ form.genre.label(class='form-label') }}
+                {{ form.genre(class='form-control') }}
+            </div>
+
+            <div class="row mb-3">
+                <label for="inputFile">Selecione a capa do album':</label>
+                <input type="file" class="form-control" name="inputFile" 
+                id="inputFile" accept=".jpg, .jpeg, .png">
+            </div>
+
+            <div class="row">
+                {{ form.button(class='btn btn-primary') }}
+            </div>
+        </fieldset>
+    </form>
+</div>
+{% endblock content %}
