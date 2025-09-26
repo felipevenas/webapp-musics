@@ -3,11 +3,16 @@
 {% block content %}
 
 <div class="container">
-    <form method="post" action="{{ url_for('auth_bp.authenticate') }}">
+    <form method="post" action="{{ url_for('auth_bp.register') }}">
 
         {{ form.csrf_token() }}
 
         <fieldset>
+            <div class="row mb-3">
+                {{ form.name.label(class='form-label') }}
+                {{ form.name(class='form-control') }}
+            </div>
+
             <div class="row mb-3">
                 {{ form.login.label(class='form-label') }}
                 {{ form.login(class='form-control') }}
