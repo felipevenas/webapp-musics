@@ -1,4 +1,4 @@
-{% extends 'template.html' %}
+{% extends 'auth/template_login.html' %}
 
 {% block content %}
 <div class="container">
@@ -23,22 +23,22 @@
 
 
             <div class="row mb-3">
-                {{ music.name.label(class='form-label') }}
-                {{ music.name(class='form-control') }}
+                {{ form.name.label(class='form-label') }}
+                {{ form.name(class='form-control') }}
             </div>
 
             <div class="row mb-3">
-                {{ music.artist.label(class='form-label') }}
-                {{ music.artist(class='form-control') }}
+                {{ form.artist.label(class='form-label') }}
+                {{ form.artist(class='form-control') }}
             </div>
 
             <div class="row mb-3">
-                {{ music.genre.label(class='form-label') }}
-                {{ music.genre(class='form-control') }}
+                {{ form.genre.label(class='form-label') }}
+                {{ form.genre(class='form-control') }}
             </div>
 
             <div class="row">
-                {{ music.button(clas='btn btn-primary') }}
+                {{ form.button(class='btn btn-primary') }}
             </div>
 
         </fieldset>

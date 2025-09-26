@@ -2,6 +2,8 @@ from flask import redirect, request, Blueprint, url_for, flash, send_from_direct
 
 from app.domain.music.model import Music
 from app.db.config import db
+from app.forms.forms import FormMusic
+
 from app.domain.upload import config
 from app.domain.upload.services import delete_image
 from app.forms.forms import FormMusic
@@ -22,6 +24,15 @@ def add_music():
     form_artist = form_recivied.artist.data
     form_genre = form_recivied.genre.data
 
+    form_recivied = FormMusic(request.form)
+
+    if not form_recivied.validate_on_submit():
+        return redirect(url_for('index_bp.add_page'))
+
+    form_name = form_recivied.name.data
+    form_artist = form_recivied.artist.data
+    form_genre = form_recivied.genre.data
+
     music = Music.query.filter_by(name=form_name).first()
     
     if music:
@@ -37,12 +48,12 @@ def add_music():
 
     archive = request.files['inputFile']
 
-    archive_name = archive.filename
-    archive_name = archive_name.split('.')
-    extension = archive_name[len(archive_name)-1]
-
-    folder = config.UPLOAD_FOLDER
-    archive.save(f'{folder}album{new_music.id}.{extension}')
+    if archive:    
+        archive_name = archive.filename
+        archive_name = archive_name.split('.')
+        extension = archive_name[len(archive_name)-1]
+        folder = config.UPLOAD_FOLDER
+        archive.save(f'{folder}album{new_music.id}.{extension}')
 
     return redirect(url_for('index_bp.list_page'))
 
@@ -71,6 +82,8 @@ def update_music():
             folder = config.UPLOAD_FOLDER
             delete_image(music.id)
             archive.save(f'{folder}album{music.id}.{extension}')
+
+        flash("Música editada com sucesso!")
 
     return redirect(url_for('index_bp.list_page'))
 

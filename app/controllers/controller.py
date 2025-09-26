@@ -19,29 +19,13 @@ def index():
 
 @index_bp.route('/add')
 def add_page():
+    form = FormMusic()
     if session['username'] == None or 'username' not in session:
         flash("É necessário se autenticar!")
         return redirect(url_for('index_bp.login_page'))
-    return render_template("add_music.html", 
-                           title = "Cadastrar música")
-
-@index_bp.route('/update')
-def update_page():
-    if session['username'] == None or 'username' not in session:
-        return redirect(url_for('index_bp.login_page'))
-    return render_template("edit_music.html",
-                           title = "Editar música")
-    
-    form = FormMusic()
-    
     return render_template("add_page.html", 
-
-    
-    form = FormMusic()
-    
-    return render_template("register_page.html", 
-                           title = "Cadastrar música",
-                           form=form)
+                           form=form,
+                           title = "Cadastrar música")
 
 @index_bp.route('/musics')
 def list_page():
@@ -84,8 +68,6 @@ def login_page():
     return render_template("auth/login_page.html",
                            title = "Login",
                            form=form)
-    return render_template("auth/login_page.html",
-                           title = "Login")
 
 @index_bp.route('/register')
 def register_page():
